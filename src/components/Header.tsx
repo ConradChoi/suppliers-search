@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation, Link as RouterLink } from 'react-router-dom';
-import { Box, Typography, IconButton, Button, Menu, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { useLocation, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Box, Typography, IconButton, Menu, Stack, useMediaQuery, useTheme, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 
 const menuItems = [
   { label: 'About', icon: <InfoOutlinedIcon fontSize="large" color="primary" />, link: '/about' },
@@ -21,6 +22,7 @@ const Header: React.FC = () => {
   const isMain = location.pathname === '/';
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -44,17 +46,19 @@ const Header: React.FC = () => {
       )}
       <Box sx={{ flex: 1 }} />
       {/* Right: Menu Icon & Login */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: { xs: 0.5, sm: 1 } }}>
         <IconButton onClick={handleMenuOpen} size="large" color="primary">
           <MenuIcon fontSize="large" />
         </IconButton>
-        <Button
-          variant="outlined"
-          color="primary"
-          sx={{ ml: 1, borderRadius: '20px', px: 3, fontWeight: 600 }}
-        >
-          로그인
-        </Button>
+        <Tooltip title="로그인">
+          <IconButton
+            color="primary"
+            sx={{ ml: 0, borderRadius: '20px' }}
+            onClick={() => navigate('/login')}
+          >
+            <LoginIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
       {/* Menu Popup */}
       <Menu

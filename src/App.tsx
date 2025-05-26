@@ -6,6 +6,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MainPage from './pages/MainPage';
 import About from './pages/About';
+import LoginPage from './pages/LoginPage';
+import JoinPage from './pages/JoinPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +41,9 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/join" element={<JoinPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />

@@ -4,7 +4,7 @@ import { Box, Container, Link as MuiLink, Select, MenuItem, Typography } from '@
 const Footer: React.FC = () => {
   const [lang, setLang] = React.useState('ko');
   return (
-    <Box sx={{ width: '100%', background: '#f2f2f2', borderTop: '1px solid #e0e0e0', pt: 1.5, pb: 0, position: 'fixed', bottom: 0, left: 0, zIndex: 1200 }}>
+    <Box sx={{ width: '100%', background: '#f2f2f2', borderTop: '1px solid #e0e0e0', pt: 1.5, pb: 0 /* position: 'fixed', bottom: 0, left: 0, zIndex: 1200 */ }}>
       <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         {/* Left: Language Selector */}
         <Box>
@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
           <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
             Terms
           </MuiLink>
-          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
+          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14, fontWeight: 700 }}>
             Privacy
           </MuiLink>
           <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
