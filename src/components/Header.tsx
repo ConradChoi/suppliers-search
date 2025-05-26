@@ -4,14 +4,12 @@ import { Box, Typography, IconButton, Menu, Stack, useMediaQuery, useTheme, Tool
 import MenuIcon from '@mui/icons-material/Menu';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import LoginIcon from '@mui/icons-material/Login';
 
 const menuItems = [
   { label: 'About', icon: <InfoOutlinedIcon fontSize="large" color="primary" />, link: '/about' },
   { label: 'Suppliers', icon: <StorefrontOutlinedIcon fontSize="large" color="primary" />, link: '/suppliers' },
-  { label: 'Items', icon: <Inventory2OutlinedIcon fontSize="large" color="primary" />, link: '/items' },
   { label: 'Board', icon: <ForumOutlinedIcon fontSize="large" color="primary" />, link: '/board' },
 ];
 

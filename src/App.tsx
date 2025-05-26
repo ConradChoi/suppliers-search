@@ -9,6 +9,7 @@ import About from './pages/About';
 import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import SuppliersPage from './pages/SuppliersPage';
 
 const theme = createTheme({
   palette: {
@@ -44,6 +45,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/join" element={<JoinPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/suppliers" element={<SuppliersPage />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />
