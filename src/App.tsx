@@ -1,0 +1,49 @@
+import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MainPage from './pages/MainPage';
+import About from './pages/About';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
+  },
+});
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/about" element={<About />} />
+          {/* Add more routes as needed */}
+        </Routes>
+        <Footer />
+      </Router>
+    </ThemeProvider>
+  );
+};
+
+export default App; 
