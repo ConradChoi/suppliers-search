@@ -10,6 +10,10 @@ import LoginPage from './pages/LoginPage';
 import JoinPage from './pages/JoinPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import SuppliersPage from './pages/SuppliersPage';
+import Top100Page from './pages/Top100Page';
+import BoardPage from './pages/BoardPage';
+import BoardWritePage from './pages/BoardWritePage';
+import BoardDetailPage from './pages/BoardDetailPage';
 
 const theme = createTheme({
   palette: {
@@ -46,6 +50,10 @@ const App: React.FC = () => {
           <Route path="/join" element={<JoinPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/suppliers" element={<SuppliersPage />} />
+          <Route path="/top100" element={<Top100Page />} />
+          <Route path="/board" element={<BoardPage />} />
+          <Route path="/board/write" element={<BoardWritePage />} />
+          <Route path="/board/:id" element={<BoardDetailPage />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />

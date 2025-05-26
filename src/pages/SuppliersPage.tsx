@@ -319,4 +319,5 @@ const SuppliersPage: React.FC = () => {
   );
 };
 
-export default SuppliersPage; 
+export default SuppliersPage;
+export { CATEGORIES, MOCK_SUPPLIERS }; 

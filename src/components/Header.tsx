@@ -6,10 +6,12 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import LoginIcon from '@mui/icons-material/Login';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
 const menuItems = [
   { label: 'About', icon: <InfoOutlinedIcon fontSize="large" color="primary" />, link: '/about' },
   { label: 'Suppliers', icon: <StorefrontOutlinedIcon fontSize="large" color="primary" />, link: '/suppliers' },
+  { label: 'TOP100', icon: <LeaderboardIcon fontSize="large" color="primary" />, link: '/top100' },
   { label: 'Board', icon: <ForumOutlinedIcon fontSize="large" color="primary" />, link: '/board' },
 ];
 
