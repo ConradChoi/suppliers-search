@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container, Link as MuiLink, Select, MenuItem, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   const [lang, setLang] = React.useState('ko');
@@ -21,16 +22,16 @@ const Footer: React.FC = () => {
         </Box>
         {/* Right: Links */}
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
+          <MuiLink component={RouterLink} to="/terms" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
             Terms
           </MuiLink>
-          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14, fontWeight: 700 }}>
+          <MuiLink component={RouterLink} to="/privacy" underline="hover" color="inherit" sx={{ fontSize: 14, fontWeight: 700 }}>
             Privacy
           </MuiLink>
-          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
+          <MuiLink href="https://ylia.info" underline="hover" color="inherit" sx={{ fontSize: 14 }} target="_blank" rel="noopener noreferrer">
             YLIA
           </MuiLink>
-          <MuiLink href="#" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
+          <MuiLink component={RouterLink} to="/faq" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
             FAQ
           </MuiLink>
         </Box>

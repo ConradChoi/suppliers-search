@@ -14,6 +14,9 @@ import Top100Page from './pages/Top100Page';
 import BoardPage from './pages/BoardPage';
 import BoardWritePage from './pages/BoardWritePage';
 import BoardDetailPage from './pages/BoardDetailPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import FAQPage from './pages/FAQPage';
 
 const theme = createTheme({
   palette: {
@@ -54,6 +57,9 @@ const App: React.FC = () => {
           <Route path="/board" element={<BoardPage />} />
           <Route path="/board/write" element={<BoardWritePage />} />
           <Route path="/board/:id" element={<BoardDetailPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/faq" element={<FAQPage />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />

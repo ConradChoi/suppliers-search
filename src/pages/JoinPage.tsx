@@ -23,6 +23,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
+import TermsModal from '../components/TermsModal';
 
 const fakeEmailCheck = (email: string) => {
   // 임의 중복 체크: test@test.com만 중복, 나머지는 사용 가능
@@ -55,6 +56,7 @@ const JoinPage: React.FC = () => {
   const [termsOpen, setTermsOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState<null | 'terms1' | 'terms2'>(null);
   const [touched, setTouched] = useState(false);
+  const [termsModalOpen, setTermsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   // 이메일 입력 시 자동 중복 체크
@@ -234,6 +236,10 @@ const JoinPage: React.FC = () => {
           </Box>
         </form>
       </Paper>
+      <TermsModal
+        open={termsModalOpen}
+        onClose={() => setTermsModalOpen(false)}
+      />
     </Container>
   );
 };
