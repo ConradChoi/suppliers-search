@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Box, Container, Grid, Typography, Paper, Button, List, ListItem, ListItemButton, ListItemText, IconButton, Collapse } from '@mui/material';
+import { Box, Container, Grid, Typography, Paper, List, ListItem, ListItemButton, ListItemText, IconButton, Collapse } from '@mui/material';
 import SupplierCard from '../components/SupplierCard';
 import { CATEGORIES, MOCK_SUPPLIERS } from './SuppliersPage';
 import FilterListIcon from '@mui/icons-material/FilterList';

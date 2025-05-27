@@ -5,7 +5,6 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
   Paper,
   Checkbox,
   FormControlLabel,
@@ -21,7 +20,6 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
 import TermsModal from '../components/TermsModal';
 

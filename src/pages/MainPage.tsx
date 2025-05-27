@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Container, TextField, Button, Typography, IconButton } from '@mui/material';
+import { Box, Container, TextField, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { Typography } from '@mui/material';
 
 const SearchBox = styled(Box)(({ theme }) => ({
   width: '100%',

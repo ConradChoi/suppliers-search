@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   Box, Container, Grid, Typography, Paper, Button, TextField, Select, MenuItem, FormControl, InputLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, useTheme, useMediaQuery
 } from '@mui/material';
@@ -63,32 +63,30 @@ const BoardPage: React.FC = () => {
     setHasMore(filtered.length > PAGE_SIZE);
   }, [filtered]);
 
-  const loadMore = () => {
-    if (loading || !hasMore) return;
-    setLoading(true);
-    setTimeout(() => {
-      const next = filtered.slice(0, (page + 1) * PAGE_SIZE);
-      setDisplayed(next);
-      setPage(page + 1);
-      setHasMore(next.length < filtered.length);
-      setLoading(false);
-    }, 500);
-  };
+  const loadMore = useCallback(() => {
+    if (!loading && hasMore) {
+      setLoading(true);
+      setTimeout(() => {
+        const next = filtered.slice(0, (page + 1) * PAGE_SIZE);
+        setDisplayed(prev => [...prev, ...next]);
+        setPage(page + 1);
+        setHasMore(next.length < filtered.length);
+        setLoading(false);
+      }, 500);
+    }
+  }, [loading, hasMore, page, filtered]);
 
-  // 스크롤 감지
-  const listRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
-      if (!listRef.current) return;
-      const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-      if (scrollTop + clientHeight >= scrollHeight - 50 && hasMore && !loading) {
+      if (window.innerHeight + document.documentElement.scrollTop
+        === document.documentElement.offsetHeight) {
         loadMore();
       }
     };
-    const ref = listRef.current;
-    if (ref) ref.addEventListener('scroll', handleScroll);
-    return () => { if (ref) ref.removeEventListener('scroll', handleScroll); };
-  }, [hasMore, loading, page, filtered]);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMore]);
 
   // 초기화
   const handleReset = () => {

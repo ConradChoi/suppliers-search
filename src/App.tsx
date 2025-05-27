@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MainPage from './pages/MainPage';
@@ -17,6 +17,8 @@ import BoardDetailPage from './pages/BoardDetailPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import FAQPage from './pages/FAQPage';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 
 const theme = createTheme({
   palette: {
@@ -41,6 +43,22 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
+  // 포트에 따라 다른 라우트 렌더링
+  if (window.location.port === '3008') {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Routes>
+            <Route path="/" element={<AdminLoginPage />} />
+            <Route path="/dashboard" element={<AdminDashboardPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -60,7 +78,7 @@ const App: React.FC = () => {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/faq" element={<FAQPage />} />
-          {/* Add more routes as needed */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </Router>
