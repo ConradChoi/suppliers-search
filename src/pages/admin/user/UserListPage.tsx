@@ -100,7 +100,7 @@ const UserListPage: React.FC = () => {
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ko}>
       <Box sx={{ p: 3 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-          일반회원 관리
+          일반회원
         </Typography>
 
         {/* 검색 영역 */}
@@ -110,39 +110,43 @@ const UserListPage: React.FC = () => {
               <Table size="small" sx={{ mb: 0 }}>
                 <TableBody>
                   <TableRow>
-                    <TableCell sx={{ width: 100, fontWeight: 'bold', background: '#f9f9f9' }}>기간검색</TableCell>
-                    <TableCell sx={{ width: 140 }}>
-                      <FormControl fullWidth size="small">
-                        <Select
-                          value={dateType}
-                          onChange={(e) => setDateType(e.target.value)}
-                        >
-                          <MenuItem value="createdAt">등록일</MenuItem>
-                          <MenuItem value="lastLogin">최근로그인</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </TableCell>
-                    <TableCell sx={{ width: 220 }}>
+                    <TableCell sx={{ width: 100, fontWeight: 'bold', background: '#f9f9f9' }}>기간선택</TableCell>
+                    <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <DatePicker
-                          label="시작일"
-                          value={startDate}
-                          onChange={(newValue: Date | null) => setStartDate(newValue)}
-                          slotProps={{ textField: { size: 'small', fullWidth: false, sx: { minWidth: 90 } } }}
-                        />
+                        <FormControl size="small" sx={{ minWidth: 120 }}>
+                          <Select
+                            value={dateType}
+                            onChange={(e) => setDateType(e.target.value)}
+                          >
+                            <MenuItem value="createdAt">등록일</MenuItem>
+                            <MenuItem value="lastLogin">최근로그인</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                          <DatePicker
+                            label="시작일"
+                            value={startDate}
+                            onChange={(newValue: Date | null) => setStartDate(newValue)}
+                            slotProps={{ textField: { size: 'small', sx: { minWidth: 110 } } }}
+                          />
+                        </LocalizationProvider>
                         <span>~</span>
-                        <DatePicker
-                          label="종료일"
-                          value={endDate}
-                          onChange={(newValue: Date | null) => setEndDate(newValue)}
-                          slotProps={{ textField: { size: 'small', fullWidth: false, sx: { minWidth: 90 } } }}
-                        />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                          <DatePicker
+                            label="종료일"
+                            value={endDate}
+                            onChange={(newValue: Date | null) => setEndDate(newValue)}
+                            slotProps={{ textField: { size: 'small', sx: { minWidth: 110 } } }}
+                          />
+                        </LocalizationProvider>
                       </Box>
                     </TableCell>
-                    <TableCell sx={{ width: 80, fontWeight: 'bold', background: '#f9f9f9' }}>검색어</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{ width: 100, fontWeight: 'bold', background: '#f9f9f9' }}>검색어</TableCell>
                     <TableCell>
-                      <Box sx={{ display: 'flex', gap: 1 }}>
-                        <FormControl size="small" sx={{ minWidth: 90 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <FormControl size="small" sx={{ minWidth: 120 }}>
                           <Select
                             value={searchType}
                             onChange={(e) => setSearchType(e.target.value)}
@@ -157,13 +161,13 @@ const UserListPage: React.FC = () => {
                           value={searchKeyword}
                           onChange={(e) => setSearchKeyword(e.target.value)}
                           placeholder="검색어 입력"
-                          sx={{ minWidth: 120 }}
+                          sx={{ minWidth: 200 }}
                         />
                       </Box>
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={5} align="right">
+                    <TableCell colSpan={2} align="right">
                       <Stack direction="row" spacing={1} justifyContent="flex-end">
                         <Button variant="contained" onClick={handleSearch}>
                           검색
@@ -182,65 +186,71 @@ const UserListPage: React.FC = () => {
 
         {/* 리스트 영역 */}
         <Paper>
-          <Box sx={{ p: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc', fontSize: 15 }}>
-            <Box>
-              전체 회원 : <b>{users.length}명</b> / 목록 보기 :
-              <Select
-                size="small"
-                value={rowsPerPage}
-                onChange={handleChangeRowsPerPage}
-                sx={{ mx: 1, width: 70 }}
+          <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography>
+              전체 회원 수: {users.length}명
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              <Button
+                variant="outlined"
+                startIcon={<DeleteIcon />}
+                onClick={() => console.log('Selected delete')}
               >
-                <MenuItem value={'30'}>30▼</MenuItem>
-                <MenuItem value={'50'}>50▼</MenuItem>
-                <MenuItem value={'100'}>100▼</MenuItem>
-              </Select>
-            </Box>
-            <Box>
-              <Button size="small" variant="text" sx={{ fontWeight: 'bold', mr: 1 }} onClick={() => console.log('Selected delete')}>
-                [선택 삭제]
+                선택 삭제
               </Button>
-              <Button size="small" variant="text" sx={{ fontWeight: 'bold' }} onClick={() => console.log('Excel download')}>
-                [엑셀다운로드]
+              <Button
+                variant="outlined"
+                startIcon={<FileDownloadIcon />}
+                onClick={() => console.log('Excel download')}
+              >
+                엑셀 다운로드
               </Button>
-            </Box>
+            </Stack>
           </Box>
+
           <TableContainer>
-            <Table sx={{ minWidth: 800, border: '1px solid #222' }} size="small">
+            <Table>
               <TableHead>
-                <TableRow sx={{ background: '#fafafa' }}>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold', width: 60 }}>번호</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold' }}>이메일</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold' }}>성명</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold' }}>등록일시</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold' }}>최근로그인일시</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold', width: 60 }}>게시글</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold', width: 60 }}>문의</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold' }}>관리</TableCell>
-                </TableRow>
                 <TableRow>
-                  <TableCell colSpan={5} />
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold', width: 60 }}>게시글</TableCell>
-                  <TableCell align="center" sx={{ border: '1px solid #222', fontWeight: 'bold', width: 60 }}>문의</TableCell>
-                  <TableCell sx={{ border: '1px solid #222' }} />
+                  <TableCell>번호</TableCell>
+                  <TableCell>이메일</TableCell>
+                  <TableCell>성명</TableCell>
+                  <TableCell>등록일시</TableCell>
+                  <TableCell>최근로그인일시</TableCell>
+                  <TableCell>게시글</TableCell>
+                  <TableCell>문의</TableCell>
+                  <TableCell>비밀번호 초기화</TableCell>
+                  <TableCell>삭제</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.map((user, idx) => (
+                {users.map((user) => (
                   <TableRow key={user.id}>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.id}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.email}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.name}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.createdAt}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.lastLoginAt}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.postCount}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>{user.inquiryCount}</TableCell>
-                    <TableCell align="center" sx={{ border: '1px solid #222' }}>
-                      <Button size="small" variant="text" sx={{ fontWeight: 'bold', p: 0, minWidth: 0, mr: 1 }} onClick={() => handlePasswordReset(user.id)}>
-                        [비밀번호 초기화]
+                    <TableCell>{user.id}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.createdAt}</TableCell>
+                    <TableCell>{user.lastLoginAt}</TableCell>
+                    <TableCell>{user.postCount}</TableCell>
+                    <TableCell>{user.inquiryCount}</TableCell>
+                    <TableCell>
+                      <Button
+                        size="small"
+                        variant="text"
+                        sx={{ fontWeight: 'bold', p: 0, minWidth: 0 }}
+                        onClick={() => handlePasswordReset(user.id)}
+                      >
+                        비밀번호 초기화
                       </Button>
-                      <Button size="small" variant="text" sx={{ fontWeight: 'bold', p: 0, minWidth: 0 }} onClick={() => handleDelete(user.id)}>
-                        [삭제]
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        size="small"
+                        variant="text"
+                        sx={{ fontWeight: 'bold', p: 0, minWidth: 0 }}
+                        onClick={() => handleDelete(user.id)}
+                      >
+                        삭제
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -248,9 +258,16 @@ const UserListPage: React.FC = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Box sx={{ p: 1, display: 'flex', justifyContent: 'flex-end', fontSize: 15 }}>
-            {`< 1 of 10 >`}
-          </Box>
+
+          <TablePagination
+            component="div"
+            count={users.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={parseInt(rowsPerPage, 10)}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[30, 50, 100]}
+          />
         </Paper>
       </Box>
     </LocalizationProvider>
