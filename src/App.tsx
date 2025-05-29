@@ -19,6 +19,8 @@ import PrivacyPage from './pages/PrivacyPage';
 import FAQPage from './pages/FAQPage';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import UserListPage from './pages/admin/user/UserListPage';
+import DashboardPage from './pages/admin/DashboardPage';
 
 const theme = createTheme({
   palette: {
@@ -51,7 +53,11 @@ const App: React.FC = () => {
         <Router>
           <Routes>
             <Route path="/" element={<AdminLoginPage />} />
-            <Route path="/dashboard" element={<AdminDashboardPage />} />
+            <Route path="/admin/*" element={<AdminDashboardPage />}>
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="user/list" element={<UserListPage />} />
+              <Route path="" element={<Navigate to="dashboard" replace />} />
+            </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>

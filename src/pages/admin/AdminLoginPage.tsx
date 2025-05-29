@@ -17,11 +17,11 @@ const AdminLoginPage: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 관리자 계정 정보 확인
-    if (email === 'hanacjh@gmail.com' && password === 'new1234!') {
+    // 관리자 계정 정보 확인 (by pass)
+    if (email === 'jhc@ylia.io' && password === 'new1234!') {
       try {
         // 로그인 성공 시 대시보드로 이동
-        await navigate('/dashboard', { replace: true });
+        await navigate('/admin/dashboard', { replace: true });
       } catch (error) {
         console.error('Navigation error:', error);
         setError('페이지 이동 중 오류가 발생했습니다.');

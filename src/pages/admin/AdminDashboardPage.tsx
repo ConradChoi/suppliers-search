@@ -44,7 +44,8 @@ import {
   Announcement as AnnouncementIcon,
   Star as StarIcon,
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet, Link } from 'react-router-dom';
+import UserListPage from './user/UserListPage';
 
 const drawerWidth = 240;
 const miniDrawerWidth = 60;
@@ -130,7 +131,9 @@ const AdminDashboardPage: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
+  const [selectedMenu, setSelectedMenu] = useState<string>('dashboard');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setDrawerOpen((prev) => !prev);
@@ -153,9 +156,43 @@ const AdminDashboardPage: React.FC = () => {
     handleClose();
   };
 
-  // 메뉴 토글 핸들러
+  // 메뉴 클릭 핸들러 수정 (이제 path 이동 제거)
   const handleMenuClick = (id: string) => {
-    setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
+    const menuItem = findMenuItem(menuTree, id);
+    if (menuItem?.children) {
+      setOpenMenus((prev) => ({ ...prev, [id]: !prev[id] }));
+    }
+  };
+
+  // 메뉴 아이템 찾기 함수
+  const findMenuItem = (items: any[], id: string): any => {
+    for (const item of items) {
+      if (item.id === id) return item;
+      if (item.children) {
+        const found = findMenuItem(item.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  };
+
+  // 선택된 메뉴에 따른 컴포넌트 렌더링
+  const renderContent = () => {
+    const path = window.location.pathname;
+    
+    switch (path) {
+      case '/admin/user/list':
+        return <UserListPage />;
+      case '/admin/dashboard':
+      default:
+        return (
+          <Container maxWidth="lg">
+            <Typography variant="h4" gutterBottom>
+              대시보드
+            </Typography>
+          </Container>
+        );
+    }
   };
 
   // 메뉴 렌더 함수 (재귀, 미니모드 지원)
@@ -164,18 +201,37 @@ const AdminDashboardPage: React.FC = () => {
       {items.map((item) => {
         const hasChildren = !!item.children;
         const isOpen = openMenus[item.id];
+        // 메뉴별 path 지정
+        let path = undefined;
+        if (item.id === 'dashboard') path = '/admin/dashboard';
+        if (item.id === 'user-normal') path = '/admin/user/list';
+        // 필요시 다른 메뉴 path 추가
         return (
           <React.Fragment key={item.id}>
             <Tooltip title={!drawerOpen ? item.text : ''} placement="right" arrow>
-              <ListItem
-                button
-                onClick={() => (hasChildren ? handleMenuClick(item.id) : undefined)}
-                sx={{ pl: drawerOpen ? 2 + depth * 2 : 1, justifyContent: drawerOpen ? 'flex-start' : 'center' }}
-              >
-                <ListItemIcon sx={{ minWidth: 36, justifyContent: 'center' }}>{item.icon}</ListItemIcon>
-                {drawerOpen && <ListItemText primary={item.text} />}
-                {hasChildren && drawerOpen && (isOpen ? <ExpandLess /> : <ExpandMore />)}
-              </ListItem>
+              {path ? (
+                <ListItem
+                  button
+                  component={Link}
+                  to={path}
+                  onClick={() => (hasChildren ? handleMenuClick(item.id) : undefined)}
+                  sx={{ pl: drawerOpen ? 2 + depth * 2 : 1, justifyContent: drawerOpen ? 'flex-start' : 'center' }}
+                >
+                  <ListItemIcon sx={{ minWidth: 36, justifyContent: 'center' }}>{item.icon}</ListItemIcon>
+                  {drawerOpen && <ListItemText primary={item.text} />}
+                  {hasChildren && drawerOpen && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  onClick={() => handleMenuClick(item.id)}
+                  sx={{ pl: drawerOpen ? 2 + depth * 2 : 1, justifyContent: drawerOpen ? 'flex-start' : 'center' }}
+                >
+                  <ListItemIcon sx={{ minWidth: 36, justifyContent: 'center' }}>{item.icon}</ListItemIcon>
+                  {drawerOpen && <ListItemText primary={item.text} />}
+                  {hasChildren && drawerOpen && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+                </ListItem>
+              )}
             </Tooltip>
             {hasChildren && (
               <Collapse in={isOpen && drawerOpen} timeout="auto" unmountOnExit>
@@ -310,11 +366,7 @@ const AdminDashboardPage: React.FC = () => {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg">
-          <Typography variant="h4" gutterBottom>
-            Contents
-          </Typography>
-        </Container>
+        <Outlet />
       </Box>
     </Box>
   );
