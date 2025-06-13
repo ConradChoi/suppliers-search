@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
           <MuiLink component={RouterLink} to="/privacy" underline="hover" color="inherit" sx={{ fontSize: 14, fontWeight: 700 }}>
             Privacy
           </MuiLink>
-          <MuiLink href="https://ylia.info" underline="hover" color="inherit" sx={{ fontSize: 14 }} target="_blank" rel="noopener noreferrer">
+          <MuiLink href="https://www.ylia.io" underline="hover" color="inherit" sx={{ fontSize: 14 }} target="_blank" rel="noopener noreferrer">
             YLIA
           </MuiLink>
           <MuiLink component={RouterLink} to="/faq" underline="hover" color="inherit" sx={{ fontSize: 14 }}>
